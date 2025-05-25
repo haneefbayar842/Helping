@@ -46,3 +46,7 @@ async function loginUser() {
   }
 }
 
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+<script src="supabase.js"></script>
+<script src="register.js"></script>
