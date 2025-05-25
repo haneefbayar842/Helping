@@ -60,3 +60,25 @@
   </script>
 </body>
 </html>
+
+<script type="module">
+  import { supabaseClient } from './supabase.js'
+
+  const form = document.getElementById('register-form')
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault()
+    const email = form.email.value
+    const password = form.password.value
+
+    const { data, error } = await supabaseClient.auth.signUp({
+      email,
+      password,
+    })
+
+    if (error) {
+      alert('Registration Failed: ' + error.message)
+    } else {
+      alert('Registration Successful! Please check your email to verify.')
+    }
+  })
+</script>
