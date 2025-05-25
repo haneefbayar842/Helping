@@ -17,3 +17,46 @@
   <a href="index.html">Back to Home</a>
 </body>
 </html>
+!DOCTYPE html>
+<html>
+<head>
+  <title>Register</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase.js"></script>
+</head>
+<body>
+  <h2>Register</h2>
+  <form id="register-form">
+    Name: <input type="text" id="name"><br><br>
+    Mobile: <input type="text" id="mobile"><br><br>
+    Email: <input type="email" id="email"><br><br>
+    Password: <input type="password" id="password"><br><br>
+    <button type="submit">Register</button>
+  </form>
+
+  <script>
+    const form = document.getElementById('register-form');
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const name = document.getElementById('name').value;
+      const mobile = document.getElementById('mobile').value;
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+
+      const { data, error } = await supabaseClient.auth.signUp({
+        email,
+        password,
+        options: {
+          data: { name, mobile }
+        }
+      });
+
+      if (error) {
+        alert('Registration Failed: ' + error.message);
+      } else {
+        alert('Registration Successful! Check your email.');
+      }
+    });
+  </script>
+</body>
+</html>
