@@ -2,45 +2,49 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>BRHELPDESK - Register</title>
-  <script src="https://unpkg.com/@supabase/supabase-js"></script>
+  <title>BR Helpdesk Register</title>
 </head>
 <body>
-  <h2>Register to BRHELPDESK</h2>
+  <h2>Register to BR Helpdesk</h2>
   <form id="registerForm">
-    <input type="text" id="name" placeholder="Name" required><br><br>
-    <input type="text" id="mobile" placeholder="Mobile Number" required><br><br>
-    <input type="email" id="email" placeholder="Email" required><br><br>
+    <label>Name:</label><br>
+    <input type="text" id="name" required><br><br>
+    
+    <label>Mobile Number:</label><br>
+    <input type="text" id="mobile" required><br><br>
+    
+    <label>Email:</label><br>
+    <input type="email" id="email" required><br><br>
+
     <button type="submit">Register</button>
   </form>
 
-  <p id="status"></p>
-
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
   <script>
     const SUPABASE_URL = "https://yevkpqzirifkuvrcntxc.supabase.co";
-    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlldmtwcXppcmlma3V2cmNudHhjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDgxNTk0MTcsImV4cCI6MjA2MzczNTQxN30.BRIJoMQqHeiOeU6fuCauHw-ybel8odMEuCZJEWIvAms";
+    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlldmtwcXppcmlma3V2cmNudHhjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDgxNTk0MTcsImV4cCI6MjA2MzczNTQxN30.BRIJoMQqHeiOeU6fuCauHw-ybel8odMEuCZJEWIvAms";
 
-    const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-    document.getElementById("registerForm").addEventListener("submit", async function(e) {
+    const form = document.getElementById("registerForm");
+    form.addEventListener("submit", async (e) => {
       e.preventDefault();
 
       const name = document.getElementById("name").value;
       const mobile = document.getElementById("mobile").value;
       const email = document.getElementById("email").value;
 
-      const { data, error } = await supabase
+      const { data, error } = await _supabase
         .from("users")
-        .insert([{ name: name, mobile: mobile, email: email }]);
+        .insert([{ name, mobile, email }]);
 
       if (error) {
-        document.getElementById("status").innerText = "Registration failed: " + error.message;
+        alert("Registration failed: " + error.message);
       } else {
-        document.getElementById("status").innerText = "Registered successfully!";
-        document.getElementById("registerForm").reset();
+        alert("Registered successfully!");
+        form.reset();
       }
     });
   </script>
 </body>
 </html>
-register.html
