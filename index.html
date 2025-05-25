@@ -2,19 +2,43 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Login - BRHELPDESK</title>
+  <title>BR Helpdesk - Register/Login</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
 </head>
 <body>
+  <h2>Register</h2>
+  <input type="email" id="email" placeholder="Enter Email"><br>
+  <input type="password" id="password" placeholder="Enter Password"><br>
+  <button onclick="signUp()">Register</button>
+
   <h2>Login</h2>
-  <form>
-    <label>Email:</label><br>
-    <input type="email" name="email" required><br><br>
+  <input type="email" id="loginEmail" placeholder="Enter Email"><br>
+  <input type="password" id="loginPassword" placeholder="Enter Password"><br>
+  <button onclick="signIn()">Login</button>
 
-    <label>Password:</label><br>
-    <input type="password" name="password" required><br><br>
+  <p id="status"></p>
 
-    <button type="submit">Login</button>
-  </form>
-  <p>Don't have an account? <a href="register.html">Register here</a></p>
+  <script>
+    const supabase = supabase.createClient(
+      'https://yevkpqzirifkuvrcntxc.supabase.co',
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlldmtwcXppcmlma3V2cmNudHhjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDgxNTk0MTcsImV4cCI6MjA2MzczNTQxN30.BRIJoMQqHeiOeU6fuCauHw-ybel8odMEuCZJEWIvAms'
+    );
+
+    async function signUp() {
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+
+      const { user, error } = await supabase.auth.signUp({ email, password });
+      document.getElementById('status').innerText = error ? error.message : 'Registered successfully! Please check your email.';
+    }
+
+    async function signIn() {
+      const email = document.getElementById('loginEmail').value;
+      const password = document.getElementById('loginPassword').value;
+
+      const { user, error } = await supabase.auth.signInWithPassword({ email, password });
+      document.getElementById('status').innerText = error ? error.message : 'Login successful!';
+    }
+  </script>
 </body>
 </html>
