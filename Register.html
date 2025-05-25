@@ -2,62 +2,42 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Register - BRHELPDESK</title>
-</head>
-<body>
-  <h2>Register</h2>
-  <form action="https://formspree.io/f/your-form-id" method="POST">
-    <label>Name:</label><br>
-    <input type="text" name="name" required><br><br>
-
-    <label>Email:</label><br>
-    <input type="email" name="email" required><br><br>
-
-    <label>Password:</label><br>
-    <input type="password" name="password" required><br><br>
-
-    <button type="submit">Register</button>
-  </form>
-  <p>Already have an account? <a href="login.html">Login here</a></p>
-</body>
-</html>
-!DOCTYPE html>
-<html>
-<head>
   <title>BRHELPDESK - Register</title>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+  <script src="https://unpkg.com/@supabase/supabase-js"></script>
 </head>
 <body>
   <h2>Register to BRHELPDESK</h2>
-  <form id="register-form">
-    <input type="text" id="name" placeholder="Full Name" required><br><br>
+  <form id="registerForm">
+    <input type="text" id="name" placeholder="Name" required><br><br>
     <input type="text" id="mobile" placeholder="Mobile Number" required><br><br>
-    <input type="email" id="email" placeholder="Email Address" required><br><br>
+    <input type="email" id="email" placeholder="Email" required><br><br>
     <button type="submit">Register</button>
   </form>
 
+  <p id="status"></p>
+
   <script>
-    const SUPABASE_URL = 'https://yevkpqzirifkuvrcntxc.supabase.co';
-    const SUPABASE_KEY = 'YOUR_ANON_KEY_HERE'; // ഇവിടെ anon public key വയ്ക്കണം
+    const SUPABASE_URL = "https://yevkpqzirifkuvrcntxc.supabase.co";
+    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlldmtwcXppcmlma3V2cmNudHhjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDgxNTk0MTcsImV4cCI6MjA2MzczNTQxN30.BRIJoMQqHeiOeU6fuCauHw-ybel8odMEuCZJEWIvAms";
+
     const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-    const form = document.getElementById('register-form');
-    form.addEventListener('submit', async (e) => {
+    document.getElementById("registerForm").addEventListener("submit", async function(e) {
       e.preventDefault();
-      const name = document.getElementById('name').value;
-      const mobile = document.getElementById('mobile').value;
-      const email = document.getElementById('email').value;
 
-      const { error } = await supabase.auth.signInWithOtp({ email });
+      const name = document.getElementById("name").value;
+      const mobile = document.getElementById("mobile").value;
+      const email = document.getElementById("email").value;
+
+      const { data, error } = await supabase
+        .from("users")
+        .insert([{ name: name, mobile: mobile, email: email }]);
+
       if (error) {
-        alert("Error sending OTP: " + error.message);
+        document.getElementById("status").innerText = "Registration failed: " + error.message;
       } else {
-        alert("OTP sent to email. After verification, your data will be saved.");
-
-        // Save to database (you can do this after verification too)
-        await supabase.from('user_profiles').insert([{ name, mobile, email }]);
+        document.getElementById("status").innerText = "Registered successfully!";
+        document.getElementById("registerForm").reset();
       }
     });
   </script>
