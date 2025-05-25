@@ -1,48 +1,33 @@
 
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Haneef Bayar | BRHELPDESK</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: linear-gradient(to right, #ff8a00, #e52e71);
-      color: white;
-      text-align: center;
-      padding: 50px;
-    }
-    h1 {
-      font-size: 3em;
-      margin-bottom: 0.2em;
-    }
-    a {
-      color: #fff;
-      text-decoration: none;
-      margin: 0 10px;
-    }
-    a:hover {
-      text-decoration: underline;
-    }
-    .info {
-      font-size: 1.2em;
-      margin-bottom: 30px;
-    }
-  </style>
+  <title>Login - BRHELPDESK</title>
 </head>
 <body>
-  <h1>Haneef Bayar</h1>
-  <div class="info">
-    Founder of <strong>BRHELPDESK</strong><br>
-    India's most trusted referral & helpdesk platform.
-  </div>
-  <p>
-    <strong>Email:</strong> haneefbayar842@gmail.com
-  </p>
-  <p>
-    <a href="https://github.com/haneefbayar842" target="_blank">GitHub</a> |
-    <a href="https://haneefbayar842.github.io/Helping/" target="_blank">Website</a>
-  </p>
+  <h2>User Login</h2>
+  <form id="login-form">
+    <input type="email" id="email" placeholder="Email" required /><br />
+    <input type="password" id="password" placeholder="Password" required /><br />
+    <button type="submit">Login</button>
+  </form>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+  <script>
+    const supabase = supabase.createClient(
+      'https://yevkpqzirifkuvrcntxc.supabase.co',
+      'YOUR_PUBLIC_ANON_KEY'
+    );
+
+    document.getElementById('login-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email: document.getElementById('email').value,
+        password: document.getElementById('password').value,
+      });
+      if (error) alert(error.message);
+      else alert("Login successful!");
+    });
+  </script>
 </body>
 </html>
