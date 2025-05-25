@@ -28,3 +28,21 @@ document.getElementById('login-form').addEventListener('submit', async (e) => {
 <script src="login.js"></script>
 
 
+// login.js
+async function loginUser() {
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+
+  const { data, error } = await supabaseClient.auth.signInWithPassword({
+    email,
+    password,
+  });
+
+  if (error) {
+    alert("Login Failed: " + error.message);
+  } else {
+    alert("Login successful!");
+    // You can redirect or show dashboard
+  }
+}
+
