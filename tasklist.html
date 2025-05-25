@@ -1,0 +1,37 @@
+
+<h2>Uploaded Tasks</h2>
+<ul id="file-list"></ul>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.3/dist/supabase.min.js"></script>
+<script>
+  const supabaseUrl = 'https://yevkpqzirifkuvrcntxc.supabase.co'
+  const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...Ams' // trimmed
+  const supabase = supabase.createClient(supabaseUrl, supabaseKey)
+
+  async function listFiles(folder) {
+    const { data, error } = await supabase.storage.from('uploads').list(folder, {
+      limit: 100,
+      offset: 0,
+      sortBy: { column: 'name', order: 'asc' }
+    })
+
+    const listElement = document.getElementById('file-list')
+    listElement.innerHTML = ''
+
+    if (error) {
+      listElement.innerHTML = '<li>Error loading files.</li>'
+      return
+    }
+
+    data.forEach(file => {
+      const fileUrl = `${supabaseUrl}/storage/v1/object/public/uploads/${folder}/${file.name}`
+      const li = document.createElement('li')
+      li.innerHTML = `<a href="${fileUrl}" target="_blank">${file.name}</a>`
+      listElement.appendChild(li)
+    })
+  }
+
+  // Show task1 uploads by default
+  listFiles('task1')
+</script>
+
