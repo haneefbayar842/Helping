@@ -31,3 +31,20 @@ document.getElementById('register-form').addEventListener('submit', async (e) =>
     alert('Registration successful. Check your email for confirmation!');
   }
 });
+
+// register.js
+async function registerUser() {
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+
+  const { user, error } = await supabaseClient.auth.signUp({
+    email,
+    password,
+  });
+
+  if (error) {
+    alert("Error: " + error.message);
+  } else {
+    alert("Registration successful! Check your email.");
+  }
+}
