@@ -2,49 +2,24 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>BR Helpdesk Register</title>
+  <title>Register | BRHELPDESK</title>
 </head>
 <body>
-  <h2>Register to BR Helpdesk</h2>
-  <form id="registerForm">
-    <label>Name:</label><br>
-    <input type="text" id="name" required><br><br>
+  <h2>Register Form</h2>
+  <form action="#" method="POST">
+    <label for="name">Name:</label><br>
+    <input type="text" id="name" name="name" required><br><br>
     
-    <label>Mobile Number:</label><br>
-    <input type="text" id="mobile" required><br><br>
+    <label for="mobile">Mobile Number:</label><br>
+    <input type="text" id="mobile" name="mobile" required><br><br>
     
-    <label>Email:</label><br>
-    <input type="email" id="email" required><br><br>
-
+    <label for="email">Email:</label><br>
+    <input type="email" id="email" name="email" required><br><br>
+    
+    <label for="password">Password:</label><br>
+    <input type="password" id="password" name="password" required><br><br>
+    
     <button type="submit">Register</button>
   </form>
-
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
-  <script>
-    const SUPABASE_URL = "https://yevkpqzirifkuvrcntxc.supabase.co";
-    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlldmtwcXppcmlma3V2cmNudHhjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDgxNTk0MTcsImV4cCI6MjA2MzczNTQxN30.BRIJoMQqHeiOeU6fuCauHw-ybel8odMEuCZJEWIvAms";
-
-    const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-    const form = document.getElementById("registerForm");
-    form.addEventListener("submit", async (e) => {
-      e.preventDefault();
-
-      const name = document.getElementById("name").value;
-      const mobile = document.getElementById("mobile").value;
-      const email = document.getElementById("email").value;
-
-      const { data, error } = await _supabase
-        .from("users")
-        .insert([{ name, mobile, email }]);
-
-      if (error) {
-        alert("Registration failed: " + error.message);
-      } else {
-        alert("Registered successfully!");
-        form.reset();
-      }
-    });
-  </script>
 </body>
 </html>
