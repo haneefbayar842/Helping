@@ -1,0 +1,58 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>BRHELPDESK - Register</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to right, #00b09b, #96c93d);
+      color: #fff;
+      text-align: center;
+      padding: 50px;
+    }
+    form {
+      background: rgba(0, 0, 0, 0.2);
+      padding: 20px;
+      border-radius: 10px;
+      display: inline-block;
+    }
+    input {
+      padding: 10px;
+      margin: 10px;
+      border-radius: 5px;
+      border: none;
+      width: 250px;
+    }
+    button {
+      padding: 10px 20px;
+      background: #fff;
+      color: #000;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    h2 {
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h2>Register for BRHELPDESK</h2>
+  <form onsubmit="registerUser(event)">
+    <input type="text" placeholder="Full Name" required><br>
+    <input type="tel" placeholder="Mobile Number" required><br>
+    <input type="email" placeholder="Email" required><br>
+    <input type="password" placeholder="Password" required><br>
+    <button type="submit">Register</button>
+  </form>
+
+  <script>
+    function registerUser(event) {
+      event.preventDefault();
+      alert("Registration Successful! (Data saving not yet connected)");
+    }
+  </script>
+</body>
+</html>
