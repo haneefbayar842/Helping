@@ -1,0 +1,69 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Wallet - BRHELPDESK</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+  <style>
+    body { font-family: sans-serif; background: #111; color: white; padding: 20px; }
+    .card { background: #222; padding: 20px; border-radius: 10px; margin: 10px 0; }
+    button { padding: 10px; margin-top: 10px; border-radius: 5px; }
+  </style>
+</head>
+<body>
+  <h2>Welcome to BRToken Wallet</h2>
+  <div class="card">
+    <p><strong>Name:</strong> <span id="userName">Loading...</span></p>
+    <p><strong>Email:</strong> <span id="userEmail"></span></p>
+    <p><strong>Mobile:</strong> <span id="userMobile"></span></p>
+    <p><strong>Referral Code:</strong> <span id="userRefCode"></span></p>
+    <p><strong>BRToken Balance:</strong> <span id="userTokens">0</span></p>
+  </div>
+
+  <div class="card">
+    <button onclick="copyReferralLink()">Share Referral Link</button>
+    <button onclick="withdraw()">Withdraw Request</button>
+  </div>
+
+  <script>
+    const supabaseUrl = "https://yevkpqzirifkuvrcntxc.supabase.co";
+    const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...";
+    const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+
+    // User Email - from login or localStorage (example only)
+    const userEmail = localStorage.getItem("user_email");
+
+    async function fetchUserData() {
+      const { data, error } = await supabase
+        .from("users")
+        .select("*")
+        .eq("email", userEmail)
+        .single();
+
+      if (data) {
+        document.getElementById("userName").textContent = data.name || "-";
+        document.getElementById("userEmail").textContent = data.email;
+        document.getElementById("userMobile").textContent = data.mobile || "-";
+        document.getElementById("userRefCode").textContent = data.referral_code || "-";
+        document.getElementById("userTokens").textContent = data.token_balance || "0";
+      } else {
+        alert("User not found!");
+      }
+    }
+
+    function copyReferralLink() {
+      const refLink = `https://haneefbayar842.github.io/Helping/register.html?ref=${document.getElementById("userRefCode").textContent}`;
+      navigator.clipboard.writeText(refLink);
+      alert("Referral Link Copied!");
+    }
+
+    function withdraw() {
+      alert("Withdraw request submitted (feature under development).");
+    }
+
+    fetchUserData();
+  </script>
+</body>
+</html>
