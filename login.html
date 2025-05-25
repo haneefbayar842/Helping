@@ -54,3 +54,26 @@
 </body>
 </html>
 
+
+<script type="module">
+  import { supabaseClient } from './supabase.js'
+
+  const form = document.getElementById('login-form')
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault()
+    const email = form.email.value
+    const password = form.password.value
+
+    const { data, error } = await supabaseClient.auth.signInWithPassword({
+      email,
+      password,
+    })
+
+    if (error) {
+      alert('Login Failed: ' + error.message)
+    } else {
+      alert('Login Successful!')
+      // Redirect to dashboard.html or any other page
+    }
+  })
+</script>
