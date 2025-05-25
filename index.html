@@ -2,43 +2,52 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>BR Helpdesk - Register/Login</title>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+  <title>BRHELPDESK Register/Login</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
-  <h2>Register</h2>
-  <input type="email" id="email" placeholder="Enter Email"><br>
-  <input type="password" id="password" placeholder="Enter Password"><br>
-  <button onclick="signUp()">Register</button>
 
-  <h2>Login</h2>
-  <input type="email" id="loginEmail" placeholder="Enter Email"><br>
-  <input type="password" id="loginPassword" placeholder="Enter Password"><br>
-  <button onclick="signIn()">Login</button>
+<h2>Register</h2>
+<form id="register-form">
+  <input type="text" id="name" placeholder="Name" required />
+  <input type="email" id="email" placeholder="Email" required />
+  <input type="text" id="phone" placeholder="Mobile Number" />
+  <button type="submit">Register</button>
+</form>
 
-  <p id="status"></p>
+<h2>Login</h2>
+<form id="login-form">
+  <input type="email" id="login-email" placeholder="Email" required />
+  <button type="submit">Login via OTP</button>
+</form>
 
-  <script>
-    const supabase = supabase.createClient(
-      'https://yevkpqzirifkuvrcntxc.supabase.co',
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlldmtwcXppcmlma3V2cmNudHhjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDgxNTk0MTcsImV4cCI6MjA2MzczNTQxN30.BRIJoMQqHeiOeU6fuCauHw-ybel8odMEuCZJEWIvAms'
-    );
+<script>
+  const supabase = supabase.createClient('https://yevkpqzirifkuvrcntxc.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlldmtwcXppcmlma3V2cmNudHhjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDgxNTk0MTcsImV4cCI6MjA2MzczNTQxN30.BRIJoMQqHeiOeU6fuCauHw-ybel8odMEuCZJEWIvAms');
 
-    async function signUp() {
-      const email = document.getElementById('email').value;
-      const password = document.getElementById('password').value;
+  document.getElementById('register-form').addEventListener('submit', async (e) => {
+    e.preventDefault()
+    const name = document.getElementById('name').value
+    const email = document.getElementById('email').value
+    const phone = document.getElementById('phone').value
 
-      const { user, error } = await supabase.auth.signUp({ email, password });
-      document.getElementById('status').innerText = error ? error.message : 'Registered successfully! Please check your email.';
-    }
+    const { data, error } = await supabase.auth.signUp({ email })
+    if (error) return alert('Signup error: ' + error.message)
 
-    async function signIn() {
-      const email = document.getElementById('loginEmail').value;
-      const password = document.getElementById('loginPassword').value;
+    const user = data.user
+    await supabase.from('users').insert({ id: user.id, name, email, phone })
+    alert('Registered! Check your email for OTP.')
+  })
 
-      const { user, error } = await supabase.auth.signInWithPassword({ email, password });
-      document.getElementById('status').innerText = error ? error.message : 'Login successful!';
-    }
-  </script>
+  document.getElementById('login-form').addEventListener('submit', async (e) => {
+    e.preventDefault()
+    const email = document.getElementById('login-email').value
+
+    const { error } = await supabase.auth.signInWithOtp({ email })
+    if (error) return alert('Login error: ' + error.message)
+
+    alert('OTP sent! Check your email.')
+  })
+</script>
+
 </body>
 </html>
