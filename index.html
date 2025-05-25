@@ -5,29 +5,16 @@
   <title>Login - BRHELPDESK</title>
 </head>
 <body>
-  <h2>User Login</h2>
-  <form id="login-form">
-    <input type="email" id="email" placeholder="Email" required /><br />
-    <input type="password" id="password" placeholder="Password" required /><br />
+  <h2>Login</h2>
+  <form>
+    <label>Email:</label><br>
+    <input type="email" name="email" required><br><br>
+
+    <label>Password:</label><br>
+    <input type="password" name="password" required><br><br>
+
     <button type="submit">Login</button>
   </form>
-
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
-  <script>
-    const supabase = supabase.createClient(
-      'https://yevkpqzirifkuvrcntxc.supabase.co',
-      'YOUR_PUBLIC_ANON_KEY'
-    );
-
-    document.getElementById('login-form').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const { data, error } = await supabase.auth.signInWithPassword({
-        email: document.getElementById('email').value,
-        password: document.getElementById('password').value,
-      });
-      if (error) alert(error.message);
-      else alert("Login successful!");
-    });
-  </script>
+  <p>Don't have an account? <a href="register.html">Register here</a></p>
 </body>
 </html>
