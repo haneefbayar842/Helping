@@ -25,3 +25,6 @@ document.getElementById('login-form').addEventListener('submit', async (e) => {
   }
 });
 
+<script src="login.js"></script>
+
+
