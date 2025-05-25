@@ -1,35 +1,74 @@
-
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Dashboard - BR Helpdesk</title>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BRHELPDESK Dashboard</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #ff6f91, #ff9671, #ffc75f, #f9f871);
+      color: #333;
+      padding: 20px;
+    }
+    .container {
+      background: white;
+      border-radius: 20px;
+      padding: 20px;
+      max-width: 800px;
+      margin: auto;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+    h1, h2 {
+      text-align: center;
+    }
+    .section {
+      margin-bottom: 30px;
+    }
+    .wallet, .referral-hub, .income-panel, .rank-section {
+      padding: 15px;
+      background: #f0f8ff;
+      border-radius: 15px;
+      margin-bottom: 20px;
+    }
+    .btn {
+      display: inline-block;
+      background: #00b894;
+      color: white;
+      padding: 10px 20px;
+      margin: 10px 5px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    .btn:hover {
+      background: #019874;
+    }
+    .progress-bar {
+      background: #ccc;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .progress-fill {
+      background: #00b894;
+      height: 20px;
+      width: 40%;
+    }
+  </style>
 </head>
 <body>
-  <h1>Welcome to BR Helpdesk Dashboard</h1>
-  <p>You are successfully logged in.</p>
-  <button onclick="logout()">Logout</button>
+  <div class="container">
+    <h1>Welcome to BRHELPDESK</h1>
 
-  <script src="https://unpkg.com/@supabase/supabase-js"></script>
-  <script>
-    const supabase = supabase.createClient(
-      'https://yevkpqzirifkuvrcntxc.supabase.co',
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlldmtwcXppcmlma3V2cmNudHhjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDgxNTk0MTcsImV4cCI6MjA2MzczNTQxN30.BRIJoMQqHeiOeU6fuCauHw-ybel8odMEuCZJEWIvAms'
-    );
+    <div class="section">
+      <h2>User Info</h2>
+      <p><strong>Name:</strong> Haneef Bayar</p>
+      <p><strong>Mobile:</strong> 8943484667</p>
+      <p><strong>Email:</strong> haneefbayar3@gmail.com</p>
+      <p><strong>Referral Code:</strong> BR10001</p>
+    </div>
 
-    async function logout() {
-      const { error } = await supabase.auth.signOut();
-      if (!error) {
-        window.location.href = "login.html";
-      }
-    }
-
-    // Check if user is logged in
-    supabase.auth.getUser().then(({ data: { user } }) => {
-      if (!user) {
-        window.location.href = "login.html";
-      }
-    });
-  </script>
-</body>
-</html>
+    <div class="referral-hub">
+      <h2>Referral Hub</h2>
+     
